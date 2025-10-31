@@ -1,6 +1,6 @@
 body {
   text-align: center;
-  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  background: linear-gradient(135deg, #009688, #004d40);
   font-family: Arial, Helvetica, sans-serif;
   color: white;
   margin: 0;
@@ -10,7 +10,21 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 8px black;
+}
+
+.info {
+  margin: 10px;
+  font-size: 20px;
+  text-shadow: 1px 1px 2px black;
+}
+
 canvas {
   border: 3px solid black;
   background: white;
@@ -22,21 +36,11 @@ canvas:hover {
   transform: scale(1.02);
   box-shadow: 0 0 30px rgba(0,0,0,0.7);
 }
-@keyframes shake {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-5px, 5px); }
-  50% { transform: translate(5px, -5px); }
-  75% { transform: translate(-5px, -5px); }
-  100% { transform: translate(0, 0); }
+
+.buttons {
+  margin-top: 20px;
 }
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-canvas.gameover {
-  animation: shake 0.3s ease-in-out 3, blink 1s ease-in-out infinite;
-  border: 3px solid red;
-}
+
 button {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   padding: 12px 20px;
@@ -45,8 +49,8 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 20px;
   font-size: 16px;
+  margin: 5px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   transition: all 0.3s ease;
 }
@@ -56,8 +60,26 @@ button:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(0,0,0,0.5);
 }
-.info {
-  margin: 10px;
-  font-size: 20px;
-  text-shadow: 1px 1px 2px black;
+
+.gameover {
+  display: none;
+  color: red;
+  font-weight: bold;
+  font-size: 24px;
+  margin-top: 15px;
+  text-shadow: 2px 2px 5px black;
+}
+
+.levelup {
+  display: none;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+  color: #fff;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 10px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
 }

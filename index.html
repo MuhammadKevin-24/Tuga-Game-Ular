@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🐍 Game Ular Tropis</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🐍 GAME ULAR TROPIS</h1>
+
+  <div class="info">
+    Skor: <span id="score">0</span> | Level: <span id="level">1</span>
+  </div>
+
+  <canvas id="Gamecanvas" width="800" height="400"></canvas>
+
+  <div id="levelup" class="levelup">LEVEL UP!</div>
+  <div id="gameover" class="gameover">💀 GAME OVER 💀</div>
+
+  <div class="buttons">
+    <button id="startBtn" onclick="startGame()">▶️ Mulai Game</button>
+    <button id="resetBtn" onclick="resetGame()" style="display:none;">🔄 Main Lagi</button>
+  </div>
+
+  <!-- 🎵 Musik latar & efek suara -->
+  <audio id="bgmusic" src="sounds/bgmusic.mp3" loop preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
