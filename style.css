@@ -1,85 +1,110 @@
-body {
-  text-align: center;
-  background: linear-gradient(135deg, #009688, #004d40);
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
-  margin: 0;
-  padding: 20px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+:root{
+  --bg-dark:#071023;
+  --neon-1:#00f0ff;   /* cyan */
+  --neon-2:#7aff6f;   /* green */
+  --accent:#ff63e7;   /* magenta */
+  --panel:rgba(255,255,255,0.04);
+  --glass:rgba(255,255,255,0.02);
+  --glass-strong:rgba(255,255,255,0.06);
+  --font: "Segoe UI", Roboto, "Press Start 2P", monospace;
 }
 
-h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 8px black;
+/* page */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,#02050a 0%, #071023 60%);font-family:var(--font);color:#bfefff}
+.stage{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;gap:18px}
+
+/* header */
+.title{
+  margin:0;
+  font-weight:700;
+  letter-spacing:4px;
+  color:var(--neon-1);
+  text-shadow:
+    0 0 10px rgba(0,240,255,0.18),
+    0 0 30px rgba(0,240,255,0.08),
+    0 6px 20px rgba(0,0,0,0.6);
+  font-size:28px;
+}
+.hud{display:flex;gap:18px;font-size:13px;opacity:0.95}
+
+/* canvas container: add retro scanline + vignette */
+main{
+  position:relative;
+  width:820px;
+  max-width:95%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+canvas{
+  display:block;
+  width:800px;height:400px;
+  border-radius:8px;
+  box-shadow:
+    0 10px 40px rgba(3,8,20,0.7),
+    inset 0 0 60px rgba(0,255,255,0.03);
+  background:linear-gradient(180deg,#020814,#001122);
+  image-rendering: pixelated; /* retro feel */
+  border: 1px solid rgba(0,255,255,0.06);
 }
 
-.info {
-  margin: 10px;
-  font-size: 20px;
-  text-shadow: 1px 1px 2px black;
+/* overlay texts */
+.overlay{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.95);
+  padding:14px 28px;
+  border-radius:8px;
+  color:white;
+  background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  text-shadow:0 6px 18px rgba(0,0,0,0.6);
+  font-weight:700;
+  letter-spacing:2px;
+  display:none;
+  box-shadow:0 8px 40px rgba(0,0,0,0.6), 0 0 28px rgba(0,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(6px);
+}
+.overlay.gameover{
+  background: linear-gradient(90deg, rgba(255,0,60,0.12), rgba(0,0,0,0.4));
+  color: #ffccd6;
+  text-shadow:0 6px 22px rgba(255,0,60,0.12);
 }
 
-canvas {
-  border: 3px solid black;
-  background: white;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  border-radius: 10px;
-  transition: 0.3s;
+/* buttons */
+.controls{display:flex;gap:12px}
+.btn{
+  background:var(--glass-strong);
+  border:1px solid rgba(255,255,255,0.04);
+  color:var(--neon-1);
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+  letter-spacing:1px;
+  transition:all .18s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 18px rgba(0,255,255,0.03);
 }
-canvas:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 30px rgba(0,0,0,0.7);
-}
-
-.buttons {
-  margin-top: 20px;
-}
-
-button {
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  padding: 12px 20px;
-  background: black;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  margin: 5px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-}
-button:hover {
-  background: white;
-  color: black;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+.btn:hover{
+  transform:translateY(-3px) scale(1.01);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.6), 0 0 40px rgba(0,240,255,0.08);
+  color:var(--neon-2);
 }
 
-.gameover {
-  display: none;
-  color: red;
-  font-weight: bold;
-  font-size: 24px;
-  margin-top: 15px;
-  text-shadow: 2px 2px 5px black;
+/* subtle retro scanlines overlay */
+main::after{
+  content:"";
+  position:absolute;pointer-events:none;
+  inset:0;border-radius:8px;
+  background-image: linear-gradient(rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.01) 51%);
+  background-size:100% 4px;
+  mix-blend-mode:overlay;opacity:0.6;
 }
 
-.levelup {
-  display: none;
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 48px;
-  color: #fff;
-  padding: 10px 20px;
-  background: rgba(0,0,0,0.6);
-  border-radius: 10px;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+/* small responsive tweaks */
+@media (max-width:860px){
+  canvas{width:92%;height:45vw}
+  .title{font-size:20px}
 }
